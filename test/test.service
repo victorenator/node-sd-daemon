@@ -1,0 +1,6 @@
+[Unit]
+Description=Test Daemon with watchdog
+
+[Service]
+ExecStart=/usr/bin/nodejs src/node-sd-daemon/test/test.js
+WatchdogSec=10s

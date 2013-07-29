@@ -1,0 +1,27 @@
+{
+    "name": "sd-daemon",
+    "version": "0.1.0",
+    
+    "description": "Bindings for libsystemd-daemon",
+    "homepage": "https://github/victorenator/node-sd-daemon",
+    
+    "author": {
+        "name": "Viktar Vauchkevich",
+        "email": "victorenator@gmail.com"
+    },
+            
+    "keywords": ["systemd", "daemon"],
+    
+    "scripts": {
+        "install": "node-gyp rebuild"
+    },
+    
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/victorenator/node-sd-daemon.git"
+    },
+
+    "engines": {
+        "nodejs": ">= 0.8"
+    }
+}

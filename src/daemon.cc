@@ -29,6 +29,7 @@ namespace daemon {
     void init(v8::Handle<v8::Object> exports) {
         exports->Set(v8::String::NewSymbol("notify"), v8::FunctionTemplate::New(notify)->GetFunction());
         exports->Set(v8::String::NewSymbol("booted"), v8::FunctionTemplate::New(booted)->GetFunction());
+        exports->Set(v8::String::NewSymbol("LISTEN_FDS_START"), v8::Integer::New(SD_LISTEN_FDS_START));
     }
 }
 

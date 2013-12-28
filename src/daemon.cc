@@ -1,5 +1,5 @@
 #include <v8.h>
-#include <nodejs/src/node.h>
+#include <node.h>
 
 #include <systemd/sd-daemon.h>
 

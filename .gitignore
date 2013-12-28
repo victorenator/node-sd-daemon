@@ -1,2 +1,4 @@
 build
-/daemon.node
+daemon.node
+debian/files
+debian/node-sd-daemon*

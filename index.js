@@ -1,4 +1,4 @@
-var binding = require('./build/Release/daemon.node');
+var binding = require('./daemon');
 
 exports.booted = binding.booted;
 exports.notify = binding.notify;

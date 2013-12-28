@@ -1,9 +1,11 @@
 {
     "name": "sd-daemon",
-    "version": "0.1.0",
+    "version": "0.1.1",
     
     "description": "Bindings for libsystemd-daemon",
     "homepage": "https://github/victorenator/node-sd-daemon",
+    
+    "license": "LGPL-2.1+",
     
     "author": {
         "name": "Viktar Vauchkevich",

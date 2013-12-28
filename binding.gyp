@@ -6,6 +6,22 @@
             "libraries": [
                 "<!@(pkg-config --libs-only-l libsystemd-daemon)"
             ]
+        },
+        {
+            "target_name": "install_daemon_node",
+            "dependencies": ["daemon"],
+            "actions": [
+                {
+                    "action_name": "install_daemon_node",
+                    "inputs": [
+                        "<@(PRODUCT_DIR)/daemon.node"
+                    ],
+                    "outputs": [
+                        "daemon.node"
+                    ],
+                    "action": ["cp", "<@(PRODUCT_DIR)/daemon.node", "daemon.node"]
+                }
+            ]
         }
     ]
 }

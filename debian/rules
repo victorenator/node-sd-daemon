@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	node-gyp configure
+
+override_dh_auto_build:
+	node-gyp build
+
+override_dh_shlibdeps:
+	dpkg-shlibdeps -Tdebian/node-sd-daemon.substvars \
+		debian/node-sd-daemon/usr/lib/nodejs/sd-daemon/daemon.node
+
+override_dh_strip:
+	strip --remove-section=.comment --remove-section=.note --strip-unneeded \
+		debian/node-sd-daemon/usr/lib/nodejs/sd-daemon/daemon.node
+
+override_dh_clean:
+	dh_clean
+	node-gyp clean
+	rm daemon.node

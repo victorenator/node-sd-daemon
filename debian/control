@@ -1,0 +1,12 @@
+Source: node-sd-daemon
+Section: devel
+Priority: extra
+Maintainer: Viktar Vauchkevich <victorenator@gmail.com>
+Build-Depends: debhelper (>= 9), nodejs-dev, node-gyp, libsystemd-daemon-dev
+Standards-Version: 3.9.5
+Homepage: https://github.com/victorenator/node-sd-daemon
+
+Package: node-sd-daemon
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, nodejs
+Description: NodeJS bindings for libsystemd-daemon

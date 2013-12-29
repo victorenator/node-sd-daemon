@@ -1,5 +1,9 @@
 # Bindings for libsystemd-daemon #
 
+## Dependencies ##
+* pkg-config
+* libsystemd-daemon-dev
+
 ## Install ##
 ```
 npm install sd-daemon

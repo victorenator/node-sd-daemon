@@ -1,6 +1,9 @@
 [Unit]
-Description=Test Daemon with watchdog
+Description=Test Service with watchdog
 
 [Service]
+Type=notify
 ExecStart=/usr/bin/nodejs src/node-sd-daemon/test/test.js
 WatchdogSec=10s
+Restart=on-failure
+TimeoutStopSec=2s

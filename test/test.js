@@ -2,9 +2,8 @@ var http = require('http');
 
 var sd = require('../index.js');
 
-sd.notify('STATUS=starting');
+sd.notifyStatus('starting');
 
-var timer;
 var server = http.createServer(function(req, res) {
     console.log(req.method, req.url);
     if (req.url === '/block') {
@@ -19,18 +18,20 @@ var server = http.createServer(function(req, res) {
 server.listen(8089, function(error) {
     if (error) {
         console.error('listen', error);
+        process.exit(1);
 
     } else {
-        timer = setInterval(function() {
-            sd.notify('WATCHDOG=1');
-        }, 1000);
-        sd.notify('READY=1\nSTATUS=running');
+        sd.startWatchdogPing();
+        sd.notifyReady();
+        sd.notifyStatus('running');
     }
 });
 
 process.on('SIGTERM', function() {
     console.log("Stopping");
-    clearInterval(timer);
+    sd.notifyStatus('stopping');
+    
     server.close();
-    sd.notify('READY=0\nSTATUS=stopping');
+    
+    sd.stopWatchdogPing();
 });

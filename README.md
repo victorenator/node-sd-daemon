@@ -25,9 +25,9 @@ sudo systemctl start user@vic.service
 systemctl --user link "$PWD/test/test.service"
 systemctl --user start test.service
 
-curl localhost:8088
+curl localhost:8089
 systemctl --user status test.service
-curl localhost:8088/block
+curl localhost:8089/block
 ....
 systemctl --user status test.service
 

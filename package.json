@@ -3,7 +3,7 @@
     "version": "0.1.2",
     
     "description": "Bindings for libsystemd-daemon",
-    "homepage": "https://github/victorenator/node-sd-daemon",
+    "homepage": "https://github.com/victorenator/node-sd-daemon",
     
     "license": "LGPL-2.1+",
     

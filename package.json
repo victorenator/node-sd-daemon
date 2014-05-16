@@ -1,6 +1,6 @@
 {
     "name": "sd-daemon",
-    "version": "0.1.2",
+    "version": "0.2.0",
     
     "description": "Bindings for libsystemd-daemon",
     "homepage": "https://github.com/victorenator/node-sd-daemon",

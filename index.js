@@ -7,7 +7,7 @@ exports.notify = binding.notify;
 exports.LISTEN_FDS_START = binding.LISTEN_FDS_START;
 
 exports.listen_fds = function() {
-    return process.env['LISTEN_FDS'] || 0;
+    return parseInt(process.env['LISTEN_FDS'], 10) || 0;
 };
 
 exports.notifyReady = function() {
@@ -53,3 +53,31 @@ exports.stopWatchdogPing = function() {
     }
 };
 
+var net = require('net');
+var Pipe = process.binding('pipe_wrap').Pipe;
+
+var origListen = net.Server.prototype.listen;
+net.Server.prototype.listen = function(arg, cb) {
+    if (arg && 'systemd' in arg) {
+    
+        if (arg.systemd >= exports.listen_fds()) {
+            this.emit('listening', new Error('bad socket activation descriptor'));
+            
+        } else {
+            return this.listen({fd: exports.LISTEN_FDS_START + arg.systemd, listened: true}, cb);
+        }
+        
+    } else if (arg && 'fd' in arg && arg.listened) {
+        if (cb) this.once('listening', cb);
+        
+        this._handle = new Pipe();
+        this._handle.open(arg.fd);
+        this._listen2(null, -1, -1);
+        
+        this.emit('listening');
+        
+    } else {
+        origListen.apply(this, arguments);
+    }
+    return this;
+};

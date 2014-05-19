@@ -1,5 +1,6 @@
-node-sd-daemon (0.2.0) UNRELEASED; urgency=medium
+node-sd-daemon (0.2.1) UNRELEASED; urgency=medium
 
+  [ Viktar Vauchkevich ]
   * Initial release.
   * Socket Activation.
 

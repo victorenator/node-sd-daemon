@@ -58,7 +58,7 @@ var Pipe = process.binding('pipe_wrap').Pipe;
 
 var origListen = net.Server.prototype.listen;
 net.Server.prototype.listen = function(arg, cb) {
-    if (arg && 'systemd' in arg) {
+    if (typeof(arg) == 'object' && 'systemd' in arg) {
     
         if (arg.systemd >= exports.listen_fds()) {
             this.emit('listening', new Error('bad socket activation descriptor'));
@@ -67,7 +67,7 @@ net.Server.prototype.listen = function(arg, cb) {
             return this.listen({fd: exports.LISTEN_FDS_START + arg.systemd, listened: true}, cb);
         }
         
-    } else if (arg && 'fd' in arg && arg.listened) {
+    } else if (typeof(arg) == 'object' && 'fd' in arg && arg.listened) {
         if (cb) this.once('listening', cb);
         
         this._handle = new Pipe();

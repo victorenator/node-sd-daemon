@@ -1,13 +1,18 @@
+var util = require('util');
+
 var binding = require('./daemon');
 
 var watchdog = null;
 
 exports.booted = binding.booted;
-exports.notify = binding.notify;
 exports.LISTEN_FDS_START = binding.LISTEN_FDS_START;
 
 exports.listen_fds = function() {
     return parseInt(process.env['LISTEN_FDS'], 10) || 0;
+};
+
+exports.notify = function() {
+    return binding.notify(util.format.apply(util, arguments));
 };
 
 exports.notifyReady = function() {
@@ -19,7 +24,7 @@ exports.notifyReloading = function() {
 };
 
 exports.notifyStatus = function(status) {
-    return exports.notify('STATUS=' + status);
+    return exports.notify('STATUS=%s', status);
 };
 
 exports.notifyStopping = function() {

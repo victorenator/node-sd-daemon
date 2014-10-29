@@ -11,15 +11,23 @@ exports.listen_fds = function() {
 };
 
 exports.notifyReady = function() {
-    exports.notify('READY=1');
+    return exports.notify('READY=1');
+};
+
+exports.notifyReloading = function() {
+    return exports.notify('RELOADING=1');
 };
 
 exports.notifyStatus = function(status) {
-    exports.notify('STATUS=' + status);
+    return exports.notify('STATUS=' + status);
+};
+
+exports.notifyStopping = function() {
+    return exports.notify('STOPPING=1');
 };
 
 exports.notifyWatchdog = function() {
-    exports.notify('WATCHDOG=1');
+    return exports.notify('WATCHDOG=1');
 };
 
 exports.watchdogUsec = function() {

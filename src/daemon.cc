@@ -25,7 +25,7 @@ NAN_METHOD(notify) {
         NanReturnUndefined();
     }
         
-    Utf8Value state(args[0]);
+    String::Utf8Value state(args[0]);
         
     const int res = sd_notify(0, *state);
 

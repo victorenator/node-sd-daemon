@@ -40,12 +40,19 @@ systemctl --user disable test.service
 test-socket.socket:
 ```ini
 ...
-[Service]
-ExecStart=/usr/bin/nodejs test.js
-NonBlocking=yes
+[Socket]
+ListenStream=8088
 ```
 
 test-socket.service:
+```ini
+...
+[Service]
+ExecStart=/usr/bin/nodejs test-socket.js
+NonBlocking=yes
+```
+
+test-socket.js:
 ```javascript
 var listeners = sd.listeners();
 if (listeners.length) {

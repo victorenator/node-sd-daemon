@@ -1,6 +1,6 @@
 {
     "variables": {
-        "NODEJS": "<!(which nodejs || which node)"
+        "NODEJS": "<!(['sh', '-c', 'which nodejs || which node'])"
     },
     "targets": [
         {
@@ -10,7 +10,7 @@
                 "<!(<(NODEJS) -e \"require('nan')\")"
             ],
             "libraries": [
-                "<!@(pkg-config --silence-errors --libs-only-l libsystemd || pkg-config --silence-errors --libs-only-l libsystemd-daemon)"
+                "<!@(['sh', '-c', 'pkg-config --silence-errors --libs-only-l libsystemd || pkg-config --silence-errors --libs-only-l libsystemd-daemon'])"
             ]
         },
         {

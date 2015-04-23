@@ -1,31 +1,33 @@
+/* jshint node: true */
+/* global process */
+
 var http = require('http');
 
 var sd = require('../index.js');
 
 sd.notify('STATUS=starting');
 
-var timer;
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
     console.log(req.method, req.url);
     res.end('Hello\n');
 });
 
-var sock = sd.listen_fds() > 0? {fd: sd.LISTEN_FDS_START}: 8088;
+var listeners = sd.listeners();
+var sock = listeners.length > 0? {fd: listeners[0]}: 8088;
 
-server.listen(sock, function(error) {
+server.listen(sock, function (error) {
     if (error) {
-        console.error('listen', error);
+        console.error('Listen error: %j', error);
 
     } else {
-        console.log("Running in %s mode", sock.fd? 'socket-activate': 'standalone');
+        console.log('Running in %s mode', sock.fd? 'socket-activate': 'standalone');
+        console.log('Listen: %j', server.address());
         sd.notify('READY=1\nSTATUS=running');
     }
 });
 
-
-process.on('SIGTERM', function() {
-    console.log("Stopping");
-    clearInterval(timer);
+process.on('SIGTERM', function () {
+    console.log('Stopping');
     server.close();
     sd.notify('READY=0\nSTATUS=stopping');
 });

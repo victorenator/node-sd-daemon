@@ -1,10 +1,13 @@
+/* jshint node: true */
+/* global process */
+
 var http = require('http');
 
 var sd = require('../index.js');
 
 sd.notifyStatus('starting');
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
     console.log(req.method, req.url);
     if (req.url === '/block') {
         var i = 1;
@@ -15,7 +18,7 @@ var server = http.createServer(function(req, res) {
     }
 });
 
-server.listen(8089, function(error) {
+server.listen(8089, function (error) {
     if (error) {
         console.error('listen', error);
         process.exit(1);
@@ -27,7 +30,7 @@ server.listen(8089, function(error) {
     }
 });
 
-process.on('SIGTERM', function() {
+process.on('SIGTERM', function () {
     console.log("Stopping");
     sd.notifyStatus('stopping');
     

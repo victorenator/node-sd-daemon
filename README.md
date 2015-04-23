@@ -21,7 +21,6 @@ sudo dpkg -i ../node-sd-daemon_*.deb
 
 ### Watchdog ###
 ```
-sudo systemctl start user@$(id -u).service
 systemctl --user link "$PWD/test/test.service"
 systemctl --user start test.service
 
@@ -36,15 +35,23 @@ systemctl --user disable test.service
 ```
 
 ### Socket Activation ###
+
+test.service:
 ```
-sudo systemctl start user@$(id -u).service
-systemctl --user link "$PWD/test/test-sa.socket"
-systemctl --user start test-sa.socket
+...
+[Service]
+ExecStart=...
+NonBlocking=yes
+```
+
+```
+systemctl --user link "$PWD/test/test-socket.socket" "$PWD/test/test-socket.service"
+systemctl --user start test-socket.socket
 
 curl localhost:8088
-systemctl --user status test-sa.service
+systemctl --user status test-socket.service
 ....
 
-systemctl --user stop test-sa.socket
-systemctl --user disable test-sa.socket
+systemctl --user stop test-socket.socket test-socket.service
+systemctl --user disable test-socket.socket
 ```

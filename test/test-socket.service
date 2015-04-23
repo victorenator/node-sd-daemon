@@ -5,3 +5,4 @@ Description=Test-SA Service
 Type=notify
 ExecStart=/usr/bin/nodejs src/node-sd-daemon/test/test-socket.js
 TimeoutStopSec=2s
+NonBlocking=yes

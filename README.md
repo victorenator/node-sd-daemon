@@ -21,6 +21,20 @@ sudo dpkg -i ../node-sd-daemon_*.deb
 ## Test ##
 
 ### Watchdog ###
+
+test.service:
+```ini
+...
+[Service]
+WatchdogSec=10s
+```
+
+test.js:
+```javascript
+...
+sd.startWatchdogPing();
+```
+
 ```bash
 systemctl --user link "$PWD/test/test.service"
 systemctl --user start test.service
@@ -28,7 +42,8 @@ systemctl --user start test.service
 curl localhost:8089
 systemctl --user status test.service
 curl localhost:8089/block
-....
+
+...
 systemctl --user status test.service
 
 systemctl --user stop test.service
@@ -66,7 +81,7 @@ systemctl --user start test-socket.socket
 
 curl localhost:8088
 systemctl --user status test-socket.service
-....
+...
 
 systemctl --user stop test-socket.socket test-socket.service
 systemctl --user disable test-socket.socket

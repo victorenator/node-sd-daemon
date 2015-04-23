@@ -38,8 +38,8 @@ systemctl --user disable test.service
 ### Socket Activation ###
 
 test-socket.socket:
-```
-...ini
+```ini
+...
 [Service]
 ExecStart=/usr/bin/nodejs test.js
 NonBlocking=yes

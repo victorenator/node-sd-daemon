@@ -106,14 +106,34 @@ Service=test-s3@2.service
 ```
 
 ```bash
-systemctl --user link "$PWD/test/test-s3@.service" "$PWD/test/test-s3.socket"
-systemctl --user start test-s3@1.service test-s3@2.service
+$ systemctl --user link "$PWD/test/test-s3@.service" "$PWD/test/test-s3.socket"
+$ systemctl --user start test-s3@1.service test-s3@2.service
 
-curl localhost:8087
-curl localhost:8087
-curl localhost:8087
-curl localhost:8087
+$ systemctl --user list-units --all test-s3*
+ UNIT              LOAD   ACTIVE SUB     DESCRIPTION
+test-s3@1.service loaded active running Test-S3 Service
+test-s3@2.service loaded active running Test-S3 Service
+test-s3.socket    loaded active running Test S3 Socket
 
-systemctl --user stop test-s3@1.service test-s3@2.service test-s3.socket
-systemctl --user disable test-s3@.service test-s3.socket
+$ systemctl --user list-sockets test-s3*
+LISTEN    UNIT           ACTIVATES
+[::]:8087 test-s3.socket test-s3@2.service, test-s3@1.service
+
+$ ss -tlp
+LISTEN 0 128  :::8087 :::*  users:(("nodejs",pid=...,fd=3),("nodejs",pid=...,fd=3),("systemd",pid=...,fd=...))
+
+$ curl localhost:8087
+Hello 2
+
+$ curl localhost:8087
+Hello 1
+
+$ curl localhost:8087
+Hello 1
+
+$ curl localhost:8087
+Hello 2
+
+$ systemctl --user stop test-s3@1.service test-s3@2.service test-s3.socket
+$ systemctl --user disable test-s3@.service test-s3.socket
 ```

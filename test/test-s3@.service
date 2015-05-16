@@ -1,0 +1,7 @@
+[Unit]
+Description=Test-S3 Service
+
+[Service]
+ExecStart=/usr/bin/nodejs src/node-sd-daemon/test/test-s3.js %i
+NonBlocking=yes
+Sockets=test-s3.socket

@@ -1,0 +1,7 @@
+[Unit]
+Description=Test S3 Socket
+
+[Socket]
+ListenStream=8087
+Service=test-s3@1.service
+Service=test-s3@2.service

@@ -86,3 +86,34 @@ systemctl --user status test-socket.service
 systemctl --user stop test-socket.socket test-socket.service
 systemctl --user disable test-socket.socket
 ```
+
+### Cluster (two instances) ###
+
+test-s3@.service
+```ini
+[Service]
+ExecStart=/usr/bin/nodejs test-s3.js %i
+NonBlocking=yes
+Sockets=test-s3.socket
+```
+
+test-s3.socket:
+```ini
+[Socket]
+ListenStream=8087
+Service=test-s3@1.service
+Service=test-s3@2.service
+```
+
+```bash
+systemctl --user link "$PWD/test/test-s3@.service" "$PWD/test/test-s3.socket"
+systemctl --user start test-s3@1.service test-s3@2.service
+
+curl localhost:8087
+curl localhost:8087
+curl localhost:8087
+curl localhost:8087
+
+systemctl --user stop test-s3@1.service test-s3@2.service test-s3.socket
+systemctl --user disable test-s3@.service test-s3.socket
+```

@@ -47,8 +47,14 @@ exports.notifyWatchdog = function () {
     return exports.notify('WATCHDOG=1');
 };
 
+exports.watchdog_enabled = function () {
+    var usec = Number(process.env.WATCHDOG_USEC);
+    var pid = Number(process.env.WATCHDOG_PID);
+    return usec > 0 && (!pid || pid === process.pid)? usec: 0;
+};
+
 exports.watchdogUsec = function () {
-    return parseInt(process.env['WATCHDOG_USEC'], 10) || null;
+    return Number(process.env.WATCHDOG_USEC) || null;
 };
 
 /**
@@ -56,15 +62,21 @@ exports.watchdogUsec = function () {
  * @param {number} k
  */
 exports.startWatchdogPing = function (k) {
-    if (watchdog) return;
+    if (watchdog) {
+       return;
+    }
 
-    var timeout = exports.watchdogUsec();
+    var usec = exports.watchdogUsec();
 
-    if (!timeout) return;
+    if (!usec) {
+        return;
+    }
 
-    if (!(k > 0 && k < 1)) k = 0.5;
+    if (!(k > 0 && k < 1)) {
+        k = 0.5;
+    }
 
-    timeout = Math.round(timeout * k / 1000);
+    var timeout = Math.round(usec * k / 1000);
 
     watchdog = setInterval(function () {
         exports.notifyWatchdog();

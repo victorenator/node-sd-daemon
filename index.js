@@ -16,9 +16,15 @@ exports.listen_fds = function () {
 
 exports.listeners = function () {
     var count = Number(process.env.LISTEN_FDS) || 0;
+    var fdNames = (process.env.LISTEN_FDNAMES || '').split(':');
     var arr = new Array(count);
     for (var i = 0; i < count; i++) {
-        arr[i] = binding.LISTEN_FDS_START + i;
+        arr[i] = {
+            fd: binding.LISTEN_FDS_START + i
+        };
+        if (fdNames[i]) {
+            arr[i].name = fdNames[i];
+        }
     }
     return arr;
 };

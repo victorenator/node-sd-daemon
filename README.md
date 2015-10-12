@@ -10,12 +10,17 @@
 npm install sd-daemon
 ```
 
-### On Debian ###
+### Debian ###
 ```bash
 sudo apt-get install devscripts
 sudo mk-build-deps -ir
 debuild
 sudo dpkg -i ../node-sd-daemon_*.deb
+```
+
+### CentOS ###
+```bash
+sudo yum install systemd-devel
 ```
 
 ## Test ##

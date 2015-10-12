@@ -71,7 +71,7 @@ test-socket.js:
 ```javascript
 var listeners = sd.listeners();
 if (listeners.length) {
-    server.listen({fd: listeners[0]});
+    server.listen(listeners[0]);
 }
 ```
 

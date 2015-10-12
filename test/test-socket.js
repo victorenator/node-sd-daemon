@@ -13,7 +13,9 @@ var server = http.createServer(function (req, res) {
 });
 
 var listeners = sd.listeners();
-var sock = listeners.length > 0? {fd: listeners[0]}: 8088;
+console.log(listeners);
+
+var sock = listeners.length > 0? listeners[0]: 8088;
 
 server.listen(sock, function (error) {
     if (error) {

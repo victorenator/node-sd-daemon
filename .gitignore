@@ -2,4 +2,6 @@ build
 daemon.node
 debian/files
 debian/node-sd-daemon*
+nbproject
 node_modules
+node-sd-daemon.*

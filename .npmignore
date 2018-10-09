@@ -1,4 +1,6 @@
 build
 daemon.node
 debian
+nbproject
 node_modules
+node-sd-daemon.*

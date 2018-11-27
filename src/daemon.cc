@@ -30,11 +30,12 @@ namespace daemon {
         if (status != napi_ok) return nullptr;
 
         char* state = new char[len + 1];
-        status = napi_get_value_string_utf8(env, args[0], state, len, nullptr);
+        status = napi_get_value_string_utf8(env, args[0], state, len + 1, nullptr);
+        int res = sd_notify(0, state);
+        delete[] state;
 
         napi_value value;
-        status = napi_create_int32(env, sd_notify(0, state), &value);
-        delete[] state;
+        status = napi_create_int32(env, res, &value);
         if (status != napi_ok) return nullptr;
 
         return value;

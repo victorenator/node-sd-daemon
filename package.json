@@ -1,6 +1,6 @@
 {
     "name": "sd-daemon",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Bindings for libsystemd-daemon",
     "homepage": "https://github.com/victorenator/node-sd-daemon",
     "license": "LGPL-2.1+",
@@ -9,7 +9,7 @@
         "email": "victorenator@gmail.com"
     },
     "dependencies": {
-        "node-addon-api": "*"
+        "node-addon-api": "^1.7.1"
     },
     "keywords": [
         "systemd",

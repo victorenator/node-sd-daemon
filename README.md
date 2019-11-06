@@ -1,9 +1,9 @@
 # Bindings for libsystemd-daemon #
 
 ## Dependencies ##
+* build-essential
 * pkg-config
 * libsystemd-dev or libsystemd-daemon-dev
-* node-nan
 
 ## Install ##
 ```bash

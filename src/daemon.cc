@@ -1,4 +1,3 @@
-#define NAPI_VERSION 3
 #include <node_api.h>
 #include <systemd/sd-daemon.h>
 
@@ -44,16 +43,25 @@ namespace daemon {
 
 napi_value init(napi_env env, napi_value exports) {
     napi_status status;
-    napi_value listenFdsStart;
-    status = napi_create_int32(env, SD_LISTEN_FDS_START, &listenFdsStart);
-    if (status != napi_ok) return nullptr;
-    napi_property_descriptor desc[] = {
-        {"LISTEN_FDS_START", nullptr, nullptr, nullptr, nullptr, listenFdsStart, napi_default, nullptr},
-        {"booted", nullptr, daemon::booted, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"notify", nullptr, daemon::notify, nullptr, nullptr, nullptr, napi_default, nullptr}
-    };
-    status = napi_define_properties(env, exports, 3, desc);
-    if (status != napi_ok) return nullptr;
+
+    napi_value listen_fds_start_int32;
+    napi_value booted_fn;
+    napi_value notify_fn;
+
+    status = napi_create_int32(env, SD_LISTEN_FDS_START, &listen_fds_start_int32);
+    if (status != napi_ok) return NULL;
+    status = napi_create_function(env, NULL, 0, daemon::booted, NULL, &booted_fn);
+    if (status != napi_ok) return NULL;
+    status = napi_create_function(env, NULL, 0, daemon::notify, NULL, &notify_fn);
+    if (status != napi_ok) return NULL;
+
+    status = napi_set_named_property(env, exports, "LISTEN_FDS_START", listen_fds_start_int32);
+    if (status != napi_ok) return NULL;
+    status = napi_set_named_property(env, exports, "booted", booted_fn);
+    if (status != napi_ok) return NULL;
+    status = napi_set_named_property(env, exports, "notify", notify_fn);
+    if (status != napi_ok) return NULL;
+
     return exports;
 }
 

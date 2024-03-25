@@ -1,35 +1,32 @@
-/* jshint node: true */
-/* global process */
+import {createServer} from 'node:http';
 
-var http = require('http');
+import {listeners as sdListeners, notify} from '../index.js';
 
-var sd = require('../index.js');
+notify('STATUS=starting');
 
-sd.notify('STATUS=starting');
-
-var server = http.createServer(function (req, res) {
+const server = createServer((req, res) => {
     console.log(req.method, req.url);
     res.end('Hello\n');
 });
 
-var listeners = sd.listeners();
+const listeners = sdListeners();
 console.log(listeners);
 
-var sock = listeners.length > 0? listeners[0]: 8088;
+const sock = listeners.length > 0? listeners[0]: 8088;
 
-server.listen(sock, function (error) {
+server.listen(sock, error => {
     if (error) {
         console.error('Listen error: %j', error);
 
     } else {
-        console.log('Running in %s mode', sock.fd? 'socket-activate': 'standalone');
+        console.log('Running in %s mode', sock['fd']? 'socket-activate': 'standalone');
         console.log('Listen: %j', server.address());
-        sd.notify('READY=1\nSTATUS=running');
+        notify('READY=1\nSTATUS=running');
     }
 });
 
-process.on('SIGTERM', function () {
+process.on('SIGTERM', () => {
     console.log('Stopping');
     server.close();
-    sd.notify('READY=0\nSTATUS=stopping');
+    notify('READY=0\nSTATUS=stopping');
 });

@@ -2,7 +2,7 @@ Source: node-sd-daemon
 Section: devel
 Priority: extra
 Maintainer: Viktar Vauchkevich <victorenator@gmail.com>
-Build-Depends: debhelper (>= 9), nodejs-dev, node-gyp, libsystemd-dev, pkg-config, node-nan
+Build-Depends: debhelper (>= 9), nodejs-dev, node-gyp, libsystemd-dev, pkg-config
 Standards-Version: 3.9.5
 Homepage: https://github.com/victorenator/node-sd-daemon
 

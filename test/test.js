@@ -1,13 +1,10 @@
-/* jshint node: true */
-/* global process */
+import {createServer} from 'node:http';
 
-var http = require('http');
+import {notifyReady, notifyStatus, startWatchdogPing, stopWatchdogPing} from '../index.js';
 
-var sd = require('../index.js');
+notifyStatus('starting');
 
-sd.notifyStatus('starting');
-
-var server = http.createServer(function (req, res) {
+const server = createServer((req, res) => {
     console.log(req.method, req.url);
     if (req.url === '/block') {
         var i = 1;
@@ -18,23 +15,23 @@ var server = http.createServer(function (req, res) {
     }
 });
 
-server.listen(8089, function (error) {
+server.listen(8089, error => {
     if (error) {
         console.error('listen', error);
         process.exit(1);
 
     } else {
-        sd.startWatchdogPing();
-        sd.notifyReady();
-        sd.notifyStatus('running');
+        startWatchdogPing();
+        notifyReady();
+        notifyStatus('running');
     }
 });
 
 process.on('SIGTERM', function () {
-    console.log("Stopping");
-    sd.notifyStatus('stopping');
+    console.log('Stopping');
+    notifyStatus('stopping');
     
     server.close();
     
-    sd.stopWatchdogPing();
+    stopWatchdogPing();
 });

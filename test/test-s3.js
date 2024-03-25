@@ -1,16 +1,13 @@
-/* jshint node: true */
-/* global process */
+import {createServer} from 'node:http';
 
-var http = require('http');
+const instance = process.argv[2];
 
-var instance = process.argv[2];
-
-var server = http.createServer(function (req, res) {
+const server = createServer((req, res) => {
     console.log(req.method, req.url);
     res.end('Hello ' + instance + '\n');
 });
 
-server.listen({fd: 3}, function (error) {
+server.listen({fd: 3}, error => {
     if (error) {
         console.error('Listen error: %j', error);
 
@@ -19,6 +16,6 @@ server.listen({fd: 3}, function (error) {
     }
 });
 
-process.on('SIGTERM', function () {
+process.on('SIGTERM', () => {
     server.close();
 });

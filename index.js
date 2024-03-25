@@ -54,11 +54,11 @@ export function notify(... args) {
 }
 
 export function notifyReady() {
-    return exports.notify('READY=1');
+    return notify('READY=1');
 }
 
 export function notifyReloading() {
-    return exports.notify('RELOADING=1');
+    return notify('RELOADING=1');
 }
 
 /**
@@ -66,15 +66,15 @@ export function notifyReloading() {
  * @returns 
  */
 export function notifyStatus(status) {
-    return exports.notify('STATUS=%s', status);
+    return notify('STATUS=%s', status);
 }
 
 export function notifyStopping() {
-    return exports.notify('STOPPING=1');
+    return notify('STOPPING=1');
 }
 
 export function notifyWatchdog() {
-    return exports.notify('WATCHDOG=1');
+    return notify('WATCHDOG=1');
 }
 
 export function watchdogEnabled() {
@@ -96,7 +96,7 @@ export function startWatchdogPing(k = 0.5) {
        return;
     }
 
-    const usec = exports.watchdogUsec();
+    const usec = watchdogUsec();
 
     if (!usec) {
         return;

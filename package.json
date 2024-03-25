@@ -1,8 +1,10 @@
 {
     "name": "sd-daemon",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "type": "module",
-    "module": "./index.js",
+    "exports": {
+        ".": "./index.js"
+    },
     "description": "Bindings for libsystemd-daemon",
     "homepage": "https://github.com/victorenator/node-sd-daemon",
     "license": "LGPL-2.1+",
